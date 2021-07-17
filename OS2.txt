@@ -1,0 +1,43 @@
+#Author: Smiket Barodia
+#ID_NO : 2018A7PS0231H
+
+read n;
+declare -i k=${n[@]:0:1}
+declare -a arr;
+male=0;
+female=0;
+maxdept=""
+declare -i max=-1;
+for i in $(seq 1 $k); 
+do
+    read str
+    IFS=' ';
+    read -a strarr <<< "$str"
+    declare -A dept;
+    declare -i helper=0
+    helper=dept[${strarr[@]:1:1}]
+    helper=$((helper+1))
+    dept[${strarr[@]:1:1}]=$helper
+    if [ $helper -ge $max ];
+    then
+    max=$helper
+    maxdept=${strarr[@]:1:1}
+    fi
+    length=${#str};
+    if [ $i -eq $(($k-1)) ]; 
+    then
+    var=${str:$length-1:1}
+    else
+    var=${str:$length-1:1}
+    fi
+ if [ "$var" = "M" ];
+then
+    male=$((male+1))
+else
+    female=$((female+1))
+fi
+    arr+=$str;
+done
+ echo ${#dept[@]}
+echo $male $female
+echo $maxdept

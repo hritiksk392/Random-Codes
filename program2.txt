@@ -1,0 +1,36 @@
+#Author: Smiket Barodia
+#ID_NO : 2018A7PS0231H
+
+read n;
+declare -i k=${n[@]:0:1}
+declare -a names;
+for i in $(seq 1 $k); 
+do
+    read email
+    declare -i len=${#email[@]}
+        if [ $i -eq $(($k-1)) ]; 
+    then
+    email=${email[@]:0:len-2}
+    else
+    email=${email[@]:0:len-2}
+    fi
+    
+    if [[ "$email" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$ ]]
+then
+        IFS='@ || .';
+    read -a strarr <<< "$email"
+    names[i]=${strarr[0],,}
+    strr=${strarr[1],,}
+    declare -A provider;
+    provider[$strr]=1;
+    unset IFS
+else
+   continue;
+fi
+
+done
+IFS=$'\n'
+sorted=($(sort <<<"${names[*]}"))
+echo ${sorted[@]}
+sorted=($(sort <<<"${!provider[*]}"))
+echo ${sorted[@]}
